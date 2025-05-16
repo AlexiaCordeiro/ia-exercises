@@ -8,13 +8,12 @@ POPULATION_SIZE = 400
 MAX_GENERATIONS = 150
 MUTATION_RATE = 0.15
 CROSSOVER_RATE = 0.8
-ELITISM_SIZE = 40 
+ELITISM_SIZE = 40  
 VIDEO_FILENAME = 'schaffer_evolution.mp4'
 DOMAIN_LIMIT = 10
 FPS = 15
 DPI = 150
 
-# Schaffer's F6 function
 def schaffer_f6(x, y):
     term = x**2 + y**2
     numerator = (np.sin(np.sqrt(term))**2 - 0.5)
@@ -42,7 +41,6 @@ class GeneticAlgorithm:
         selected = []
         for _ in range(self.population_size - ELITISM_SIZE):
             candidates_indices = np.random.choice(range(self.population_size), size=3, replace=False)
-           
             winner_index = candidates_indices[np.argmax(fitness[candidates_indices])]
             selected.append(self.population[winner_index])
         return np.array(selected)
@@ -97,7 +95,7 @@ class GeneticAlgorithm:
             self.elitism(fitness, children)
             if self.worst_fitness_history[-1] >= self.average_fitness_history[-1]:
                 print(f"Worst fitness reached average fitness at generation {gen+1}")
-                break  
+                break
 
 def setup_plots():
     plt.style.use('seaborn-v0_8')
@@ -126,20 +124,19 @@ def create_video(ga):
     print("\nPreparing visualization...")
     fig, ax_population, ax_fitness = setup_plots()
 
-    # Prepare contour plot data
+
     x = np.linspace(-DOMAIN_LIMIT, DOMAIN_LIMIT, 100)
     y = np.linspace(-DOMAIN_LIMIT, DOMAIN_LIMIT, 100)
     X, Y = np.meshgrid(x, y)
     Z = schaffer_f6(X, Y)
     levels = np.linspace(0, 1, 20)
 
-    
     writer = FFMpegWriter(fps=FPS, metadata=dict(title='GA Evolution - Schaffer F6'))
 
     print("Creating video (this may take a few minutes)...")
     with writer.saving(fig, VIDEO_FILENAME, dpi=DPI):
         for gen in tqdm(range(len(ga.population_history))):
-           
+
             ax_population.clear()
             ax_population.contourf(X, Y, Z, levels=levels, cmap=cm.viridis, alpha=0.6)
             population = ga.population_history[gen]
@@ -173,5 +170,4 @@ if __name__ == "__main__":
     ga = GeneticAlgorithm(population_size=POPULATION_SIZE, domain_limit=DOMAIN_LIMIT)
     ga.run(MAX_GENERATIONS)
     create_video(ga)
-
 
