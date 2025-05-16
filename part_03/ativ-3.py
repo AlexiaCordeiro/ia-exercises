@@ -4,12 +4,11 @@ import matplotlib.pyplot as plt
 from matplotlib.animation import FFMpegWriter
 from matplotlib import cm
 
-# Optimization settings for slower convergence
 POPULATION_SIZE = 400
 MAX_GENERATIONS = 150
 MUTATION_RATE = 0.15
 CROSSOVER_RATE = 0.8
-ELITISM_SIZE = 40  # Number of best individuals to keep
+ELITISM_SIZE = 40 
 VIDEO_FILENAME = 'schaffer_evolution.mp4'
 DOMAIN_LIMIT = 10
 FPS = 15
@@ -26,7 +25,7 @@ class GeneticAlgorithm:
     def __init__(self, population_size, domain_limit):
         self.population_size = population_size
         self.domain_limit = domain_limit
-        # Initialize population with a normal distribution centered at (0,0)
+
         self.population = np.random.normal(loc=0.0, scale=3.0, size=(self.population_size, 2))
         self.population = np.clip(self.population, -self.domain_limit, self.domain_limit)
 
@@ -43,7 +42,7 @@ class GeneticAlgorithm:
         selected = []
         for _ in range(self.population_size - ELITISM_SIZE):
             candidates_indices = np.random.choice(range(self.population_size), size=3, replace=False)
-            # Original selection: always select the best from the candidates
+           
             winner_index = candidates_indices[np.argmax(fitness[candidates_indices])]
             selected.append(self.population[winner_index])
         return np.array(selected)
@@ -98,7 +97,7 @@ class GeneticAlgorithm:
             self.elitism(fitness, children)
             if self.worst_fitness_history[-1] >= self.average_fitness_history[-1]:
                 print(f"Worst fitness reached average fitness at generation {gen+1}")
-                break  # Stop if worst fitness reaches or exceeds average fitness
+                break  
 
 def setup_plots():
     plt.style.use('seaborn-v0_8')
@@ -134,13 +133,13 @@ def create_video(ga):
     Z = schaffer_f6(X, Y)
     levels = np.linspace(0, 1, 20)
 
-    # Set up video writer
+    
     writer = FFMpegWriter(fps=FPS, metadata=dict(title='GA Evolution - Schaffer F6'))
 
     print("Creating video (this may take a few minutes)...")
     with writer.saving(fig, VIDEO_FILENAME, dpi=DPI):
         for gen in tqdm(range(len(ga.population_history))):
-            # Update population plot
+           
             ax_population.clear()
             ax_population.contourf(X, Y, Z, levels=levels, cmap=cm.viridis, alpha=0.6)
             population = ga.population_history[gen]
@@ -155,7 +154,6 @@ def create_video(ga):
             ax_population.legend(loc='upper right')
             ax_population.grid(True, alpha=0.3)
 
-            # Update fitness plot
             ax_fitness.clear()
             ax_fitness.plot(ga.best_fitness_history[:gen+1], 'g-', label='Best Fitness')
             ax_fitness.plot(ga.average_fitness_history[:gen+1], 'b-', label='Average Fitness')
