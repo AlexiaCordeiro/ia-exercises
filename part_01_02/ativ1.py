@@ -31,7 +31,6 @@ def clonalg_optimization_with_history(objective_func, bounds, pop_size=50, max_i
     history['all_fitness'].append(fitness.copy())
     
     for iteration in range(max_iter):
-        # Seleção
         n_clones = int(pop_size * clone_factor)
         sorted_indices = np.argsort(fitness)[::-1]
         selected = population[sorted_indices[:n_clones]]
