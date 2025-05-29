@@ -5,14 +5,10 @@ from mpl_toolkits.mplot3d import Axes3D
 from matplotlib.animation import FFMpegWriter, FuncAnimation
 
 def alpine02(x):
-    """Função Alpine02 para n dimensões"""
     return np.prod(np.sqrt(x) * np.sin(x))
 
 def clonalg_optimization_with_history(objective_func, bounds, pop_size=50, max_iter=100, 
                                     beta=1, clone_factor=0.1, mutation_rate=0.2):
-    """
-    Versão modificada que armazena o histórico completo da população
-    """
     n_dim = len(bounds)
     history = {'best_fitness': [], 'best_solutions': [], 'all_populations': [], 'all_fitness': []}
     
