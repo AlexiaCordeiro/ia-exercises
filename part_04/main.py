@@ -4,7 +4,7 @@ import random
 
 # Parâmetros do algoritmo
 num_ants = 20
-num_iterations = 1000  # Aumentei para garantir convergência
+num_iterations = 150
 alpha = 1.0
 beta = 3.0
 rho = 0.1
@@ -141,4 +141,3 @@ for i in range(len(best_path) - 1):
     dist = distance_matrix[best_path[i], best_path[i+1]]
     total += dist
     print(f"{best_path[i]} → {best_path[i+1]}: {dist:.2f} (subtotal: {total:.2f})")
-print(f"Distância total: {total:.2f}")
