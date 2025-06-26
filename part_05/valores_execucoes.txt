@@ -1,0 +1,19 @@
+Vídeo 01
+Melhor valor encontrado (gbest): 2.842170943040401e-14
+Posição correspondente (gbest_pos): [9.685837314002349e-09, 5.929863281213892e-09]
+
+Vídeo 02
+Melhor valor encontrado (gbest): 0.9949590570932898
+Posição correspondente (gbest_pos): [0.9949586396731064, -3.1056279783988305e-10]
+
+Vídeo 03
+Melhor valor encontrado (gbest): 2.428419374237496
+Posição correspondente (gbest_pos): [-0.08429929382282914, 1.0117774701754583]
+
+Vídeo 04
+Melhor valor encontrado (gbest): 0.9949590570932898
+Posição correspondente (gbest_pos): [1.4011685058486917e-09, 0.9949586355177445]
+
+Vídeo 05
+Melhor valor encontrado (gbest): 0.018090961031571595
+Posição correspondente (gbest_pos): [-0.0047622358045024404, 0.008278048012744621]
