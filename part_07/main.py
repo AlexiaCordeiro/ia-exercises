@@ -5,6 +5,7 @@ def ler_dados_do_arquivo(nome_arquivo):
     dados = []
     try:
         with open(nome_arquivo, 'r', encoding='utf-8') as arquivo:
+            # Pular linhas de comentário
             for linha in arquivo:
                 if linha.strip().startswith('dados = ['):
                     break
@@ -12,11 +13,12 @@ def ler_dados_do_arquivo(nome_arquivo):
             # Ler os dados
             for linha in arquivo:
                 linha = linha.strip()
-                if linha.startswith(']'):
+                if linha.startswith(']'):  # Fim dos dados
                     break
                 if not linha or linha.startswith('#'):
                     continue
                 
+                # Limpar a linha e extrair valores
                 linha = linha.strip().rstrip(',')
                 valores = [v.strip().strip("'\" ") for v in linha.split(',')]
                 if len(valores) == 5:
@@ -63,10 +65,12 @@ def predict(instance, prior_probabilities, conditional_probabilities, classes):
             else:
                 predictions[cls] += math.log(1e-10)
     
+    # Converter de volta para probabilidades
     max_log = max(predictions.values())
     for cls in predictions:
         predictions[cls] = math.exp(predictions[cls] - max_log)
     
+    # Normalizar
     total = sum(predictions.values())
     for cls in predictions:
         predictions[cls] /= total
@@ -94,7 +98,10 @@ def main():
     ]
     
     for case in test_cases:
-        print("\nTestando:", case)
+
+        print("\nTestando:\n")
+        print("\n[Tempo, Temperatura, Umidade, Vento]")
+        print(case)
         probs = predict(case, prior_probs, cond_probs, classes)
         for cls, prob in probs.items():
             print(f"{cls}: {prob*100:.2f}%")
